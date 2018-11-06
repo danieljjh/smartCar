@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 '''
 #=============================================================================
 #     FileName: views.py
@@ -15,6 +17,21 @@ from contextlib import closing
 from pi_car import app
 import re
 import RPi.GPIO as GPIO
+
+CarSpeedControl = 50
+	#小车电机引脚定义
+IN1 = 20
+IN2 = 21
+IN3 = 19
+IN4 = 26
+ENA = 16
+ENB = 13
+
+#RGB三色灯引脚定义
+LED_R = 22
+LED_G = 27
+LED_B = 24
+
 @app.route('/')
 def show_index():
 	return render_template('home.html')
@@ -28,9 +45,25 @@ def login():
 
 @app.route('/ctl',methods=['GET','POST'])
 def ctrl_id():
-	if request.method == 'POST':
+    global pwm_ENA
+    global pwm_ENB
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(ENA,GPIO.OUT,initial=GPIO.HIGH)
+    GPIO.setup(IN1,GPIO.OUT,initial=GPIO.LOW)
+    GPIO.setup(IN2,GPIO.OUT,initial=GPIO.LOW)
+    GPIO.setup(ENB,GPIO.OUT,initial=GPIO.HIGH)
+    GPIO.setup(IN3,GPIO.OUT,initial=GPIO.LOW)
+    GPIO.setup(IN4,GPIO.OUT,initial=GPIO.LOW)
+
+    #设置pwm引脚和频率为2000hz
+    pwm_ENA = GPIO.PWM(ENA, 2000)
+    pwm_ENB = GPIO.PWM(ENB, 2000)
+    pwm_ENA.start(0)
+    pwm_ENB.start(0)
+
+    if request.method == 'POST':
 		id=request.form['id']
-		GPIO.setmode(GPIO.BOARD)
+		GPIO.setmode(GPIO.BCM)
 		GPIO.setwarnings(False)
 		GPIO.setup(11,GPIO.OUT)
 		GPIO.setup(12,GPIO.OUT)
@@ -53,35 +86,43 @@ def ctrl_id():
 			t_stop()
 			return "stop"
 
-	return redirect(url_for('show_index'))
+    return redirect(url_for('show_index'))
 
 def t_stop():
-	GPIO.output(11, False)
-	GPIO.output(12, False)
-	GPIO.output(15, False)
-	GPIO.output(16, False)
+   GPIO.output(IN1, GPIO.LOW)
+   GPIO.output(IN2, GPIO.LOW)
+   GPIO.output(IN3, GPIO.LOW)
+   GPIO.output(IN4, GPIO.LOW)
 
 def t_up():
-	GPIO.output(11, True)
-	GPIO.output(12, False)
-	GPIO.output(15, True)
-	GPIO.output(16, False)
+    GPIO.output(IN1, GPIO.HIGH)
+    GPIO.output(IN2, GPIO.LOW)
+    GPIO.output(IN3, GPIO.HIGH)
+    GPIO.output(IN4, GPIO.LOW)
+    pwm_ENA.ChangeDutyCycle(CarSpeedControl)
+    pwm_ENB.ChangeDutyCycle(CarSpeedControl)
 
 def t_down():
-	GPIO.output(11, False)
-	GPIO.output(12, True)
-	GPIO.output(15, False)
-	GPIO.output(16, True)
+    GPIO.output(IN1, GPIO.LOW)
+    GPIO.output(IN2, GPIO.HIGH)
+    GPIO.output(IN3, GPIO.LOW)
+    GPIO.output(IN4, GPIO.HIGH)
+    pwm_ENA.ChangeDutyCycle(CarSpeedControl)
+    pwm_ENB.ChangeDutyCycle(CarSpeedControl)
 
 def t_left():
-	GPIO.output(11, False)
-	GPIO.output(12, True)
-	GPIO.output(15, True)
-	GPIO.output(16, False)
+    GPIO.output(IN1, GPIO.LOW)
+    GPIO.output(IN2, GPIO.LOW)
+    GPIO.output(IN3, GPIO.HIGH)
+    GPIO.output(IN4, GPIO.LOW)
+    pwm_ENA.ChangeDutyCycle(CarSpeedControl)
+    pwm_ENB.ChangeDutyCycle(CarSpeedControl)
 
 def t_right():
-	GPIO.output(11, True)
-	GPIO.output(12, False)
-	GPIO.output(15, False)
-	GPIO.output(16, True)
+    GPIO.output(IN1, GPIO.HIGH)
+    GPIO.output(IN2, GPIO.LOW)
+    GPIO.output(IN3, GPIO.LOW)
+    GPIO.output(IN4, GPIO.LOW)
+    pwm_ENA.ChangeDutyCycle(CarSpeedControl)
+    pwm_ENB.ChangeDutyCycle(CarSpeedControl)
 
