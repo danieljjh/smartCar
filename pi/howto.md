@@ -12,6 +12,8 @@ if you can not run workon:
 
 ## libs
 
+[gpio doc](http://shumeipai.nxez.com/2014/12/27/rpio-document-rpio-py.html)
+
 ### picamera
 
 Use Picamera to capture image and video
@@ -47,3 +49,37 @@ https://pimylifeup.com/raspberry-pi-webcam-server/
 
 https://www.jianshu.com/p/86adb6d5347b
 
+python 脚本 自启动
+https://www.embbnux.com/2015/04/12/raspberry_pi_setting_python_script_start_on_boot/
+
+### PWM
+[pwm](http://shumeipai.nxez.com/2016/09/28/rpi-gpio-module-basics.html)
+
+### uart 外接串口
+https://zhuanlan.zhihu.com/p/38853178
+
+https://blog.csdn.net/qq_32384313/article/details/77745907
+
+https://blog.blahgeek.com/raspberry-pi-uartzong-xian-chuan-kou-lan-ya-mo-kuai-shi-yong-xiao-ji.html
+
+http://shumeipai.nxez.com/2016/08/08/solution-raspberry-pi3-serial-uart-use-issues.html
+
+byte 转 string
+https://techtutorialsx.com/2018/02/04/python-converting-string-to-bytes-object/
+
+
+### 在树莓派上轻松实现深度学习目标检测
+http://shumeipai.nxez.com/2018/10/05/how-to-easily-detect-objects-with-deep-learning-on-raspberry-pi.html
+
+
+### pi car example
+
+https://zhengludwig.wordpress.com/projects/self-driving-rc-car/
+
+https://www.hackster.io/bestd25/pi-car-016e66
+
+
+## system
+
+free  命令  查看内存
+sudo swapon -s 查看 swap 空间

@@ -226,7 +226,7 @@ def Distance_test():
     while GPIO.input(EchoPin):
         pass
         t2 = time.time()
-    #print "distance is %d " % (((t2 - t1)* 340 / 2) * 100)
+    print ("distance is %d " % (((t2 - t1)* 340 / 2) * 100))
     time.sleep(0.01)
     return ((t2 - t1)* 340 / 2) * 100
 	
@@ -285,15 +285,15 @@ def whistle():
 	
 #七彩灯亮指定颜色
 def color_led_pwm(iRed,iGreen, iBlue):
-    print iRed 
-    print iGreen
-    print iBlue
+    # print iRed 
+    # print iGreen
+    # print iBlue
     v_red = (100*iRed)/255
     v_green = (100*iGreen)/255
     v_blue = (100*iBlue)/255
-    print v_red
-    print v_green
-    print v_blue
+    # print v_red
+    # print v_green
+    # print v_blue
     pwm_rled.ChangeDutyCycle(v_red)
     pwm_gled.ChangeDutyCycle(v_green)
     pwm_bled.ChangeDutyCycle(v_blue)
@@ -314,7 +314,7 @@ def serial_data_parse():
     
     if InputString[3] == '1':
         g_CarState = enTLEFT
-        print "g_CarState: %d" % g_CarState
+        print ("g_CarState: %d" % g_CarState)
     elif InputString[3] == '2':
         g_CarState = enTRIGHT
     else :
@@ -358,14 +358,14 @@ def serial_data_parse():
   
     if InputString[21] == '1':
         servo_appointed_detection(90)
-        print "carstate:%d" % g_CarState
+        print ("carstate:%d" % g_CarState)
     if g_CarState != enTLEFT and g_CarState != enTRIGHT:
            
-        print run_car
-        print InputString[1]
+        print (run_car)
+        print (InputString[1])
         if InputString[1] == run_car:
             g_CarState = enRUN
-            print "run car"
+            # print "run car"
         elif InputString[1] == back_car:
             g_CarState = enBACK	
         elif InputString[1] == left_car:
@@ -399,6 +399,7 @@ def serialEvent():
         else:
             while size != 0:
                 serialdatabit = ser.read(1)
+                print(serialdatabit)
                 size -= 1
                 if serialdatabit == '$':
                     StartBit = 1
@@ -410,18 +411,18 @@ def serialEvent():
                     InputStringcache = ''
                     StartBit = 0
                     size = 0
-                    print InputString	
+                    print (InputString)	
           
 try:
     ser = serial.Serial("/dev/ttyAMA0", 9600, timeout = 0.001)
-    print "serial.isOpen() = ",ser.isOpen()
-    ser.write("serial is on!")  
+    # print "serial.isOpen() = ",ser.isOpen()
+    # ser.write("serial is on!")  
     init()
     while True:
         serialEvent()
      #   time.sleep(0.4)
 	if NewLineReceived == 1:
-            print "serialdata:%s" % InputString
+            print ("serialdata:%s" % InputString)
 	    serial_data_parse()
 	    NewLineReceived = 0
 
