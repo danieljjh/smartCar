@@ -33,8 +33,8 @@ ENB = 13
 key = 8
 
 #超声波引脚定义
-EchoPin = 0
-TrigPin = 1
+EchoPin = 3
+TrigPin = 4
 
 #RGB三色灯引脚定义
 LED_R = 22

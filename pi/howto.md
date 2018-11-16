@@ -26,11 +26,12 @@ For object detect
 
 [Opencv tutorial](https://pythonprogramming.net/loading-images-python-opencv-tutorial/)
 
+https://pythonprogramming.net/self-driving-car-python-plays-gta-v/
 
 ### mac 上查看 pi camera 视频流
 
 pi 安装 vlc server 
-`sudo apt-get insall vlc`
+`sudo apt-get install vlc`
 
 启动视频流
 `raspivid -o - -w 320 -h 240 -t 9999999 |cvlc -vvv stream:///dev/stdin --sout '#rtp{sdp=rtsp://:8554/}' :demux=h264`
