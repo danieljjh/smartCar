@@ -42,25 +42,3 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
          cv2.imwrite("imgs/line" + str(i) + " theta-" + str(theta) + " slope- " + str(slope) + ".png", image)
       rawCapture.truncate(0)
 
-    # print(theta)GPIO pins were connected to arduino for servo steering control
-    # threshold=6
-
-#    if(theta>threshold):
-#        GPIO.output(7,True)
-#        GPIO.output(8,False)
-#        print("left")
-#    if(theta<-threshold):
-#        GPIO.output(8,True)
-#        GPIO.output(7,False)
-#        print("right")
-#    if(abs(theta)<threshold):
-#       GPIO.output(8,False)
-#       GPIO.output(7,False)
-#       print "straight"
-#    theta=0
-# #    cv2.imshow("Frame",image)
-#    cv2.imwrite("Frame",image)
-#    key = cv2.waitKey(1) & 0xFF
-#    rawCapture.truncate(0)
-#    if key == ord("q"):
-#        break

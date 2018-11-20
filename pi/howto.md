@@ -28,6 +28,10 @@ For object detect
 
 https://pythonprogramming.net/self-driving-car-python-plays-gta-v/
 
+autopilot https://wroscoe.github.io/compound-eye-autopilot.html
+
+https://pythonprogramming.net/self-driving-car-python-plays-gta-v/
+
 ### mac 上查看 pi camera 视频流
 
 pi 安装 vlc server 
@@ -83,4 +87,14 @@ https://www.hackster.io/bestd25/pi-car-016e66
 ## system
 
 free  命令  查看内存
-sudo swapon -s 查看 swap 空间
+htop 查看进程
+
+## 使用 jupyter notebook server 远程调试代码
+
+https://www.techcoil.com/blog/how-to-setup-jupyter-notebook-on-raspberry-pi-3-with-raspbian-stretch-lite-supervisor-and-virtualenv-to-run-python-3-codes/
+
+在 pi 上 运行 `jupyter notebook --ip 0.0.0.0 --port 9999 --no-browser`
+在 mac 浏览器上 `http://(raspberrypi 地址):9999/?token=24970c42bb31323ebc6a0258e99dc109145aa3576283cc29`
+
+### jupyter tricks
+https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/

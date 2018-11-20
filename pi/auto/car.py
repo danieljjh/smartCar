@@ -5,6 +5,10 @@ import string
 import serial
 
 
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+
+
 # 小车电机引脚定义
 # 使用 L298P 时  ENA 16 ->PWMA ENB  13-> PWMB
 # IN1 20 ->DIRA IN3 19-> DRIB 
@@ -37,7 +41,7 @@ buzzer = 8
 start_btn = 18
 cam_btn = 4
 
-CarSpeedControl = 20
+CarSpeedControl = 50
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
@@ -75,6 +79,19 @@ pwm_bled = GPIO.PWM(LED_B, 1000)
 pwm_rled.start(0)
 pwm_gled.start(0)
 pwm_bled.start(0)
+
+
+camera = PiCamera()
+camera.resolution = (320, 240)
+camera.framerate = 15
+
+
+def save_video(t):
+    fname = str(int(time.time())) + '.h264'
+    camera.start_recording(fname)
+    camera.wait_recording(t)
+    camera.stop_recording()
+
 
 class Car(object):
     def __init__(self):
@@ -120,21 +137,31 @@ class Car(object):
         # pwm_gled.start(0)
         # pwm_bled.start(0)
 
-    def forward(self):
+    def forward(self, spd, t):
         GPIO.output(IN1, GPIO.HIGH)
         GPIO.output(IN2, GPIO.LOW)
         GPIO.output(IN3, GPIO.HIGH)
         GPIO.output(IN4, GPIO.LOW)
-        pwm_ENA.ChangeDutyCycle(CarSpeedControl)
-        pwm_ENB.ChangeDutyCycle(CarSpeedControl)
+        pwm_ENA.ChangeDutyCycle(spd)
+        pwm_ENB.ChangeDutyCycle(spd)
+        save_video(t)
+        pwm_ENA.ChangeDutyCycle(0)
+        pwm_ENB.ChangeDutyCycle(0)
+        GPIO.output(IN3, GPIO.LOW)
+        GPIO.output(IN1, GPIO.LOW)
 
-    def turn_right(self):
+    def turn_right(self, spd, t):
         GPIO.output(IN1, GPIO.HIGH)
         GPIO.output(IN2, GPIO.LOW)
         GPIO.output(IN3, GPIO.LOW)
         GPIO.output(IN4, GPIO.LOW)
-        pwm_ENA.ChangeDutyCycle(CarSpeedControl)
-        pwm_ENB.ChangeDutyCycle(CarSpeedControl)
+        pwm_ENA.ChangeDutyCycle(spd)
+        pwm_ENB.ChangeDutyCycle(spd)
+        save_video(t)
+        pwm_ENA.ChangeDutyCycle(0)
+        pwm_ENB.ChangeDutyCycle(0)
+        GPIO.output(IN3, GPIO.LOW)
+        GPIO.output(IN1, GPIO.LOW)
 
     def turn_left(self):
         GPIO.output(IN1, GPIO.LOW)
@@ -177,7 +204,5 @@ class Car(object):
         RightValue = GPIO.input(AvoidSensorRight)
         return [LeftValue, RightValue]
 
-        
 
-def start_btn():
     

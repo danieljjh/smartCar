@@ -30,7 +30,7 @@ ENA = 16
 ENB = 13
 
 #小车按键定义
-key = 8
+key = 5
 
 #超声波引脚定义
 EchoPin = 0

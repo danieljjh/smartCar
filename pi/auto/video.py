@@ -7,10 +7,13 @@ import numpy as np
 import math
 import sys
 import os
+from car import *
+# from red_detect import *
+from yellow_detect import *
 
-camera = PiCamera()
-camera.resolution = (320, 240)
-camera.framerate = 15
+# camera = PiCamera()
+# camera.resolution = (320, 240)
+# camera.framerate = 15
 
 
 def save_image():
@@ -28,6 +31,15 @@ def save_video():
 
 
 if __name__ == '__main__':
+    car = Car()
+    spd = 40
+    t = 5
+    s = 1
+    while s:
+        # car.forward(40, .1)
+        # red = red_light()
+        yellow = yewllow_circle()
 
-    save_video()
+    # car.turn_right(40, 2)
+
 

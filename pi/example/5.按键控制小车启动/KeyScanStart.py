@@ -12,6 +12,7 @@ ENB = 13
 
 #小车按键定义
 key = 8
+GPIO.setup(key, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 #设置GPIO口为BCM编码方式
 GPIO.setmode(GPIO.BCM)

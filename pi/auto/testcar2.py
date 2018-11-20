@@ -31,22 +31,18 @@ void forward()
 
 '''
 # 小车电机引脚定义
-# 使用 L298P 时
-# PWMA : 5
+# 使用 L298P 时 
+# PWMA : 5 
 # ENA 16 ->PWMA 5
 # ENB  13-> PWMB 6
 # DIRA :4
 # IN1 20 ->DIRA 4
-# DIRB :7
+# DIRB :7 
 # IN3 19-> DRIB 7
 
 IN1 = 20
-IN2 = 21
 IN3 = 19
-IN4 = 26
 
-# ENA = 6
-# ENB = 5
 ENA = 16
 ENB = 13
 
@@ -77,10 +73,8 @@ GPIO.setwarnings(False)
 #: motor
 GPIO.setup(ENA, GPIO.OUT, initial=GPIO.HIGH)
 GPIO.setup(IN1, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(IN2, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(ENB, GPIO.OUT, initial=GPIO.HIGH)
 GPIO.setup(IN3, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(IN4, GPIO.OUT, initial=GPIO.LOW)
 
 # 设置pwm引脚和频率为2000hz
 pwm_ENA = GPIO.PWM(ENA, 2000)
@@ -112,9 +106,7 @@ pwm_bled.start(0)
 
 def forward(t):
     GPIO.output(IN1, GPIO.HIGH)
-    GPIO.output(IN2, GPIO.LOW)
     GPIO.output(IN3, GPIO.HIGH)
-    GPIO.output(IN4, GPIO.LOW)
     pwm_ENA.ChangeDutyCycle(CarSpeedControl)
     pwm_ENB.ChangeDutyCycle(CarSpeedControl)
     time.sleep(t)
@@ -141,12 +133,8 @@ def turn_left(t):
 
 
 def brake():
-    GPIO.output(IN1, GPIO.LOW)
-    GPIO.output(IN2, GPIO.LOW)
-    GPIO.output(IN3, GPIO.LOW)
-    GPIO.output(IN4, GPIO.LOW)
-    pwm_ENA.ChangeDutyCycle(0)
-    pwm_ENB.ChangeDutyCycle(0)
+    GPIO.output(IN1, GPIO.HIGH)
+    GPIO.output(IN3, GPIO.HIGH)
 
 
 def backward():
@@ -156,25 +144,6 @@ def backward():
     GPIO.output(IN4, GPIO.HIGH)
     pwm_ENA.ChangeDutyCycle(CarSpeedControl)
     pwm_ENB.ChangeDutyCycle(CarSpeedControl)
-
-
-def servo_control_color():
-    for pos in range(181):
-        pwm_servo.ChangeDutyCycle(2.5 + 10 * pos/180)
-        time.sleep(0.009)
-    for pos in reversed(range(181)):
-        pwm_servo.ChangeDutyCycle(2.5 + 10 * pos/180)
-        time.sleep(0.009)
-
-
-def right():
-    GPIO.output(IN1, GPIO.HIGH)
-    GPIO.output(IN2, GPIO.LOW)
-    GPIO.output(IN3, GPIO.LOW)
-    GPIO.output(IN4, GPIO.LOW)
-    pwm_ENA.ChangeDutyCycle(CarSpeedControl)
-    pwm_ENB.ChangeDutyCycle(CarSpeedControl)
-    time.sleep(1)
 
 
 if __name__ == '__main__':
