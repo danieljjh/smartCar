@@ -98,3 +98,7 @@ https://www.techcoil.com/blog/how-to-setup-jupyter-notebook-on-raspberry-pi-3-wi
 
 ### jupyter tricks
 https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/
+
+on pi run 
+`jupyter notebook --ip 0.0.0.0 --port 9999 --no-browser`
+
